@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <title>Ảnh load từ Google Drive</title>
@@ -8,6 +8,12 @@
             text-align: center;
             font-family: Arial, sans-serif;
             background-color: #f6f6f6;
+            margin: 0;
+            padding: 0;
+        }
+
+        h2 {
+            margin-top: 20px;
         }
 
         .container {
@@ -20,6 +26,7 @@
 
         img {
             width: 900px;
+            max-width: 95%;
             border-radius: 10px;
             box-shadow: 0 0 10px #aaa;
         }
@@ -29,37 +36,33 @@
     <h2>PHA THỜI GIAN BMAG - DESIGN BY VỊT BOXING</h2>
 
     <div class="container">
-
         <!-- ẢNH 1 -->
         <img id="img1" 
-             src="https://drive.google.com/thumbnail?id=15n1xcSV_z5gpjswntUMiQ2GY9-DUSou8&sz=w1600" 
+             src="https://drive.google.com/uc?export=view&id=15n1xcSV_z5gpjswntUMiQ2GY9-DUSou8" 
              alt="1Y → 2D">
 
         <!-- ẢNH 2 -->
         <img id="img2" 
-             src="https://drive.google.com/thumbnail?id=1Nc5y-jW3puMBxM9_GZkLxNt10f4_mTYk&sz=w1600" 
+             src="https://drive.google.com/uc?export=view&id=1Nc5y-jW3puMBxM9_GZkLxNt10f4_mTYk" 
              alt="1D → 15m">
-
     </div>
 
     <script>
         function refreshImages() {
             const timestamp = new Date().getTime();
 
-            // Danh sách link ảnh gốc
             const links = {
-                img1: "https://drive.google.com/thumbnail?id=15n1xcSV_z5gpjswntUMiQ2GY9-DUSou8&sz=w1600",
-                img2: "https://drive.google.com/thumbnail?id=1Nc5y-jW3puMBxM9_GZkLxNt10f4_mTYk&sz=w1600"
+                img1: "https://drive.google.com/uc?export=view&id=15n1xcSV_z5gpjswntUMiQ2GY9-DUSou8",
+                img2: "https://drive.google.com/uc?export=view&id=1Nc5y-jW3puMBxM9_GZkLxNt10f4_mTYk"
             };
 
-            // Cập nhật src để load ảnh mới (bypass cache)
+            // Thêm timestamp để tránh cache
             document.getElementById("img1").src = links.img1 + "&t=" + timestamp;
             document.getElementById("img2").src = links.img2 + "&t=" + timestamp;
         }
 
-        // Refresh ảnh mỗi 3 phút (180000 ms)
+        // Refresh mỗi 3 phút (180000 ms)
         setInterval(refreshImages, 180000);
     </script>
-
 </body>
 </html>
