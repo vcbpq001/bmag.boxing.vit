@@ -9,9 +9,17 @@
             font-family: Arial, sans-serif;
             background-color: #f6f6f6;
         }
+
+        .container {
+            display: flex;
+            flex-direction: column;   /* HIỂN THỊ DỌC */
+            align-items: center;
+            gap: 40px;
+            margin-top: 40px;
+        }
+
         img {
-            width: 600px;          /* cho to hơn để dễ nhìn */
-            margin: 20px;
+            width: 900px;      /* tăng kích thước cho rõ */
             border-radius: 10px;
             box-shadow: 0 0 10px #aaa;
         }
@@ -20,11 +28,15 @@
 <body>
     <h2>Ảnh từ Google Drive</h2>
 
-    <!-- ẢNH 1 -->
-    <img src="https://drive.google.com/thumbnail?id=15n1xcSV_z5gpjswntUMiQ2GY9-DUSou8&sz=w1200" alt="1Y --> 2D">
+    <div class="container">
 
-    <!-- ẢNH 2 -->
-    <img src="https://drive.google.com/thumbnail?id=1Nc5y-jW3puMBxM9_GZkLxNt10f4_mTYk&sz=w1200" alt="1D --> 15m">
+        <!-- ẢNH 1 -->
+        <img src="https://drive.google.com/thumbnail?id=15n1xcSV_z5gpjswntUMiQ2GY9-DUSou8&sz=w1600" alt="1Y → 2D">
+
+        <!-- ẢNH 2 -->
+        <img src="https://drive.google.com/thumbnail?id=1Nc5y-jW3puMBxM9_GZkLxNt10f4_mTYk&sz=w1600" alt="1D → 15m">
+
+    </div>
 
 </body>
 </html>
