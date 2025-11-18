@@ -41,23 +41,24 @@
     </div>
 
     <script>
-        // Link Google Drive dạng "direct link" (bạn cần đảm bảo file share public)
+        // Link Google Drive dạng "direct link" (phải share Anyone with the link – Viewer)
         const links = {
-            img1: "https://drive.google.com/uc?export=download&id=15n1xcSV_z5gpjswntUMiQ2GY9-DUSou8",
-            img2: "https://drive.google.com/uc?export=download&id=1Nc5y-jW3puMBxM9_GZkLxNt10f4_mTYk"
+            img1: "https://drive.google.com/uc?export=view&id=15n1xcSV_z5gpjswntUMiQ2GY9-DUSou8",
+            img2: "https://drive.google.com/uc?export=view&id=1Nc5y-jW3puMBxM9_GZkLxNt10f4_mTYk"
         };
-
+    
         function refreshImages() {
             const timestamp = new Date().getTime();
             document.getElementById("img1").src = links.img1 + "&t=" + timestamp;
             document.getElementById("img2").src = links.img2 + "&t=" + timestamp;
         }
-
+    
         // Load ảnh lần đầu
         refreshImages();
-
+    
         // Refresh mỗi 3 phút
         setInterval(refreshImages, 180000);
     </script>
+
 </body>
 </html>
