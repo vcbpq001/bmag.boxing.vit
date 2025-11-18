@@ -36,32 +36,27 @@
     <h2>PHA THỜI GIAN BMAG - DESIGN BY VỊT BOXING</h2>
 
     <div class="container">
-        <!-- ẢNH 1 -->
-        <img id="img1" 
-             src="https://drive.google.com/uc?export=view&id=15n1xcSV_z5gpjswntUMiQ2GY9-DUSou8" 
-             alt="1Y → 2D">
-
-        <!-- ẢNH 2 -->
-        <img id="img2" 
-             src="https://drive.google.com/uc?export=view&id=1Nc5y-jW3puMBxM9_GZkLxNt10f4_mTYk" 
-             alt="1D → 15m">
+        <img id="img1" alt="1Y → 2D">
+        <img id="img2" alt="1D → 15m">
     </div>
 
     <script>
+        // Link Google Drive dạng "direct link" (bạn cần đảm bảo file share public)
+        const links = {
+            img1: "https://drive.google.com/uc?export=download&id=15n1xcSV_z5gpjswntUMiQ2GY9-DUSou8",
+            img2: "https://drive.google.com/uc?export=download&id=1Nc5y-jW3puMBxM9_GZkLxNt10f4_mTYk"
+        };
+
         function refreshImages() {
             const timestamp = new Date().getTime();
-
-            const links = {
-                img1: "https://drive.google.com/uc?export=view&id=15n1xcSV_z5gpjswntUMiQ2GY9-DUSou8",
-                img2: "https://drive.google.com/uc?export=view&id=1Nc5y-jW3puMBxM9_GZkLxNt10f4_mTYk"
-            };
-
-            // Thêm timestamp để tránh cache
             document.getElementById("img1").src = links.img1 + "&t=" + timestamp;
             document.getElementById("img2").src = links.img2 + "&t=" + timestamp;
         }
 
-        // Refresh mỗi 3 phút (180000 ms)
+        // Load ảnh lần đầu
+        refreshImages();
+
+        // Refresh mỗi 3 phút
         setInterval(refreshImages, 180000);
     </script>
 </body>
