@@ -12,14 +12,14 @@
 
         .container {
             display: flex;
-            flex-direction: column;   /* HIỂN THỊ DỌC */
+            flex-direction: column;
             align-items: center;
             gap: 40px;
             margin-top: 40px;
         }
 
         img {
-            width: 900px;      /* tăng kích thước cho rõ */
+            width: 900px;
             border-radius: 10px;
             box-shadow: 0 0 10px #aaa;
         }
@@ -31,12 +31,35 @@
     <div class="container">
 
         <!-- ẢNH 1 -->
-        <img src="https://drive.google.com/thumbnail?id=15n1xcSV_z5gpjswntUMiQ2GY9-DUSou8&sz=w1600" alt="1Y → 2D">
+        <img id="img1" 
+             src="https://drive.google.com/thumbnail?id=15n1xcSV_z5gpjswntUMiQ2GY9-DUSou8&sz=w1600" 
+             alt="1Y → 2D">
 
         <!-- ẢNH 2 -->
-        <img src="https://drive.google.com/thumbnail?id=1Nc5y-jW3puMBxM9_GZkLxNt10f4_mTYk&sz=w1600" alt="1D → 15m">
+        <img id="img2" 
+             src="https://drive.google.com/thumbnail?id=1Nc5y-jW3puMBxM9_GZkLxNt10f4_mTYk&sz=w1600" 
+             alt="1D → 15m">
 
     </div>
+
+    <script>
+        function refreshImages() {
+            const timestamp = new Date().getTime();
+
+            // Danh sách link ảnh gốc
+            const links = {
+                img1: "https://drive.google.com/thumbnail?id=15n1xcSV_z5gpjswntUMiQ2GY9-DUSou8&sz=w1600",
+                img2: "https://drive.google.com/thumbnail?id=1Nc5y-jW3puMBxM9_GZkLxNt10f4_mTYk&sz=w1600"
+            };
+
+            // Cập nhật src để load ảnh mới (bypass cache)
+            document.getElementById("img1").src = links.img1 + "&t=" + timestamp;
+            document.getElementById("img2").src = links.img2 + "&t=" + timestamp;
+        }
+
+        // Refresh ảnh mỗi 3 phút (180000 ms)
+        setInterval(refreshImages, 180000);
+    </script>
 
 </body>
 </html>
