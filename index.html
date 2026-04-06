@@ -11,36 +11,108 @@
       height: 100%;
       background: black;
       overflow: hidden;
+      font-family: Arial, sans-serif;
     }
+
     .wrap {
       width: 100%;
       height: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
+      position: relative;
     }
+
     img {
       max-width: 100%;
       max-height: 100%;
       object-fit: contain;
+      display: none;
+    }
+
+    .status {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      color: white;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 13px;
     }
   </style>
 </head>
 <body>
   <div class="wrap">
     <img id="liveImg" alt="Live Image">
+    <div class="status" id="status">Đang dò ảnh...</div>
   </div>
 
   <script>
-    const img = document.getElementById("liveImg");
-    const BASE_URL = "https://raw.githubusercontent.com/vcbpq001/bmag.boxing.vit/main/NOW.JPG";
+    const CANDIDATES = [
+      "./NOW.JPG",
+      "./now.jpg",
+      "https://raw.githubusercontent.com/vcbpq001/bmag.boxing.vit/main/NOW.JPG",
+      "https://raw.githubusercontent.com/vcbpq001/bmag.boxing.vit/main/now.jpg"
+    ];
 
-    function refreshImage() {
-      img.src = BASE_URL + "?t=" + Date.now();
+    const img = document.getElementById("liveImg");
+    const status = document.getElementById("status");
+
+    let workingBaseUrl = null;
+
+    function testImage(url) {
+      return new Promise((resolve, reject) => {
+        const tester = new Image();
+        tester.onload = () => resolve(url);
+        tester.onerror = () => reject(url);
+        tester.src = url + "?t=" + Date.now();
+      });
+    }
+
+    async function findWorkingUrl() {
+      for (const url of CANDIDATES) {
+        try {
+          await testImage(url);
+          return url;
+        } catch (e) {}
+      }
+      return null;
+    }
+
+    async function refreshImage() {
+      if (!workingBaseUrl) {
+        status.textContent = "Đang dò đường dẫn ảnh...";
+        workingBaseUrl = await findWorkingUrl();
+      }
+
+      if (!workingBaseUrl) {
+        img.style.display = "none";
+        status.textContent = "Không tìm thấy ảnh hợp lệ. Kiểm tra tên file NOW.JPG / now.jpg";
+        return;
+      }
+
+      const newUrl = workingBaseUrl + "?t=" + Date.now();
+      const tester = new Image();
+
+      tester.onload = function () {
+        img.src = newUrl;
+        img.style.display = "block";
+        status.textContent = "Cập nhật: " + new Date().toLocaleString("vi-VN");
+      };
+
+      tester.onerror = async function () {
+        workingBaseUrl = null;
+        status.textContent = "Ảnh lỗi, đang dò lại nguồn...";
+        await refreshImage();
+      };
+
+      tester.src = newUrl;
     }
 
     refreshImage();
-    setInterval(refreshImage, 60000);
+    setInterval(refreshImage, 60 * 1000);
+    setInterval(() => location.reload(), 5 * 60 * 1000);
   </script>
 </body>
 </html>
