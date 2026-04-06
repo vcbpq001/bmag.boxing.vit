@@ -49,13 +49,16 @@
 
   <script>
     const FILE_ID = "15n1xcSV_z5gpjswntUMiQ2GY9-DUSou8";
-    const BASE_URL = `https://drive.google.com/uc?export=view&id=${FILE_ID}`;
+
+    // Dùng thumbnail endpoint ổn định hơn uc?export=view
+    const BASE_URL = `https://drive.google.com/thumbnail?id=${FILE_ID}&sz=w4000`;
 
     const img = document.getElementById("liveImg");
     const status = document.getElementById("status");
 
     function refreshImage() {
       const newUrl = `${BASE_URL}&t=${Date.now()}`;
+
       const preloader = new Image();
 
       preloader.onload = function () {
@@ -64,7 +67,7 @@
       };
 
       preloader.onerror = function () {
-        status.textContent = "Lỗi tải ảnh: " + new Date().toLocaleString("vi-VN");
+        status.textContent = "Không tải được ảnh: " + new Date().toLocaleString("vi-VN");
       };
 
       preloader.src = newUrl;
