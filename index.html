@@ -11,87 +11,36 @@
       height: 100%;
       background: black;
       overflow: hidden;
-      font-family: Arial, sans-serif;
     }
-
     .wrap {
       width: 100%;
       height: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
-      position: relative;
     }
-
     img {
       max-width: 100%;
       max-height: 100%;
       object-fit: contain;
-      display: none;
-    }
-
-    .status {
-      position: absolute;
-      bottom: 10px;
-      right: 10px;
-      color: white;
-      background: rgba(0, 0, 0, 0.5);
-      padding: 6px 10px;
-      border-radius: 6px;
-      font-size: 13px;
     }
   </style>
 </head>
 <body>
   <div class="wrap">
     <img id="liveImg" alt="Live Image">
-    <div class="status" id="status">Đang tải...</div>
   </div>
 
   <script>
-    const BASE_URL = "./now.jpg";
     const img = document.getElementById("liveImg");
-    const status = document.getElementById("status");
-
-    let hasLoadedOnce = false;
+    const BASE_URL = "https://raw.githubusercontent.com/vcbpq001/bmag.boxing.vit/main/NOW.JPG";
 
     function refreshImage() {
-      const testUrl = BASE_URL + "?t=" + Date.now();
-      const tester = new Image();
-
-      tester.onload = function () {
-        img.src = testUrl;
-        img.style.display = "block";
-        hasLoadedOnce = true;
-        status.textContent = "Cập nhật: " + new Date().toLocaleString("vi-VN");
-      };
-
-      tester.onerror = function () {
-        if (hasLoadedOnce) {
-          status.textContent = "Ảnh mới chưa sẵn sàng, đang giữ ảnh cũ: " + new Date().toLocaleString("vi-VN");
-        } else {
-          img.style.display = "none";
-          status.textContent = "Chưa tải được ảnh, sẽ thử lại: " + new Date().toLocaleString("vi-VN");
-        }
-      };
-
-      tester.src = testUrl;
+      img.src = BASE_URL + "?t=" + Date.now();
     }
 
     refreshImage();
-
-    // kiểm tra ảnh mới mỗi 1 phút
-    setInterval(refreshImage, 60 * 1000);
-
-    // nếu lỗi lúc đầu, thử lại mỗi 10 giây
-    setInterval(() => {
-      if (!hasLoadedOnce) refreshImage();
-    }, 10 * 1000);
-
-    // tự reload trang mỗi 5 phút cho bền
-    setInterval(() => {
-      location.reload();
-    }, 5 * 60 * 1000);
+    setInterval(refreshImage, 60000);
   </script>
 </body>
 </html>
