@@ -11,7 +11,9 @@
       height: 100%;
       background: black;
       overflow: hidden;
+      font-family: Arial, sans-serif;
     }
+
     .wrap {
       width: 100%;
       height: 100%;
@@ -20,20 +22,23 @@
       justify-content: center;
       position: relative;
     }
+
     img {
       max-width: 100%;
       max-height: 100%;
       object-fit: contain;
+      display: block;
     }
+
     .status {
       position: absolute;
       bottom: 10px;
       right: 10px;
       color: white;
-      background: rgba(0,0,0,0.5);
+      background: rgba(0, 0, 0, 0.5);
       padding: 6px 10px;
       border-radius: 6px;
-      font: 13px Arial, sans-serif;
+      font-size: 13px;
     }
   </style>
 </head>
@@ -44,29 +49,29 @@
   </div>
 
   <script>
-    const BASE_URL = "https://cdn.jsdelivr.net/gh/vcbpq001/bmag-image@main/live.jpg";
+    const BASE_URL = "./NOW.JPG";
 
     const img = document.getElementById("liveImg");
     const status = document.getElementById("status");
 
     function refreshImage() {
-      const url = BASE_URL + "?t=" + Date.now();
-      const test = new Image();
+      const newUrl = BASE_URL + "?t=" + Date.now();
+      const preloader = new Image();
 
-      test.onload = function () {
-        img.src = url;
+      preloader.onload = function () {
+        img.src = newUrl;
         status.textContent = "Cập nhật: " + new Date().toLocaleString("vi-VN");
       };
 
-      test.onerror = function () {
+      preloader.onerror = function () {
         status.textContent = "Lỗi tải ảnh: " + new Date().toLocaleString("vi-VN");
       };
 
-      test.src = url;
+      preloader.src = newUrl;
     }
 
     refreshImage();
-    setInterval(refreshImage, 60000);
+    setInterval(refreshImage, 60 * 1000);
   </script>
 </body>
 </html>
