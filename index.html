@@ -27,7 +27,7 @@
       max-width: 100%;
       max-height: 100%;
       object-fit: contain;
-      display: block;
+      display: none;
     }
 
     .status {
@@ -50,28 +50,48 @@
 
   <script>
     const BASE_URL = "./now.jpg";
-
     const img = document.getElementById("liveImg");
     const status = document.getElementById("status");
 
-    function refreshImage() {
-      const newUrl = BASE_URL + "?t=" + Date.now();
-      const preloader = new Image();
+    let hasLoadedOnce = false;
 
-      preloader.onload = function () {
-        img.src = newUrl;
+    function refreshImage() {
+      const testUrl = BASE_URL + "?t=" + Date.now();
+      const tester = new Image();
+
+      tester.onload = function () {
+        img.src = testUrl;
+        img.style.display = "block";
+        hasLoadedOnce = true;
         status.textContent = "Cập nhật: " + new Date().toLocaleString("vi-VN");
       };
 
-      preloader.onerror = function () {
-        status.textContent = "Lỗi tải ảnh: " + new Date().toLocaleString("vi-VN");
+      tester.onerror = function () {
+        if (hasLoadedOnce) {
+          status.textContent = "Ảnh mới chưa sẵn sàng, đang giữ ảnh cũ: " + new Date().toLocaleString("vi-VN");
+        } else {
+          img.style.display = "none";
+          status.textContent = "Chưa tải được ảnh, sẽ thử lại: " + new Date().toLocaleString("vi-VN");
+        }
       };
 
-      preloader.src = newUrl;
+      tester.src = testUrl;
     }
 
     refreshImage();
+
+    // kiểm tra ảnh mới mỗi 1 phút
     setInterval(refreshImage, 60 * 1000);
+
+    // nếu lỗi lúc đầu, thử lại mỗi 10 giây
+    setInterval(() => {
+      if (!hasLoadedOnce) refreshImage();
+    }, 10 * 1000);
+
+    // tự reload trang mỗi 5 phút cho bền
+    setInterval(() => {
+      location.reload();
+    }, 5 * 60 * 1000);
   </script>
 </body>
 </html>
