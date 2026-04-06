@@ -11,9 +11,7 @@
       height: 100%;
       background: black;
       overflow: hidden;
-      font-family: Arial, sans-serif;
     }
-
     .wrap {
       width: 100%;
       height: 100%;
@@ -22,13 +20,11 @@
       justify-content: center;
       position: relative;
     }
-
     img {
       max-width: 100%;
       max-height: 100%;
       object-fit: contain;
     }
-
     .status {
       position: absolute;
       bottom: 10px;
@@ -37,7 +33,7 @@
       background: rgba(0,0,0,0.5);
       padding: 6px 10px;
       border-radius: 6px;
-      font-size: 13px;
+      font: 13px Arial, sans-serif;
     }
   </style>
 </head>
@@ -48,29 +44,25 @@
   </div>
 
   <script>
-    const FILE_ID = "15n1xcSV_z5gpjswntUMiQ2GY9-DUSou8";
-
-    // Dùng thumbnail endpoint ổn định hơn uc?export=view
-    const BASE_URL = `https://drive.google.com/thumbnail?id=${FILE_ID}&sz=w4000`;
+    const BASE_URL = "https://raw.githubusercontent.com/TEN_USER/TEN_REPO/main/live.jpg";
 
     const img = document.getElementById("liveImg");
     const status = document.getElementById("status");
 
     function refreshImage() {
-      const newUrl = `${BASE_URL}&t=${Date.now()}`;
+      const url = BASE_URL + "?t=" + Date.now();
+      const test = new Image();
 
-      const preloader = new Image();
-
-      preloader.onload = function () {
-        img.src = newUrl;
+      test.onload = function () {
+        img.src = url;
         status.textContent = "Cập nhật: " + new Date().toLocaleString("vi-VN");
       };
 
-      preloader.onerror = function () {
-        status.textContent = "Không tải được ảnh: " + new Date().toLocaleString("vi-VN");
+      test.onerror = function () {
+        status.textContent = "Lỗi tải ảnh: " + new Date().toLocaleString("vi-VN");
       };
 
-      preloader.src = newUrl;
+      test.src = url;
     }
 
     refreshImage();
